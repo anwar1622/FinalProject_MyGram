@@ -9,9 +9,9 @@ type Comment struct {
 	GormModel
 	UserID  uint
 	User    *User
-	PhotoID uint `json:"photo_id" from:"photo_id"`
+	PhotoID uint `json:"photo_id" form:"photo_id"`
 	Photo   *Photo
-	Message string `json:"message" from:"message" valid:"required-Comment is required"`
+	Message string `json:"message" form:"message" valid:"required~Comment is required"`
 }
 
 func (p *Comment) BeforeCreate(tx *gorm.DB) (err error) {

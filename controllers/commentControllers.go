@@ -14,15 +14,20 @@ func CreateComment(context *gin.Context) {
 	db := database.GetDB()
 	userData := context.MustGet("userData").(jwt.MapClaims)
 	contentType := helpers.GetContentType(context)
+
 	Comment := models.Comment{}
 	userID := uint(userData["id"].(float64))
+
 	if contentType == appJSON {
 		context.ShouldBindJSON(&Comment)
 	} else {
 		context.ShouldBind(&Comment)
 	}
+
 	Comment.UserID = userID
+
 	err := db.Debug().Create(&Comment).Error
+
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
 			"error":   "Bad Request",
@@ -45,7 +50,9 @@ func GetComment(context *gin.Context) {
 	Photo := models.Photo{}
 	User := models.User{}
 	Comment := models.Comment{}
+
 	userID := uint(userData["id"].(float64))
+
 	Photo.UserID = userID
 	User.ID = userID
 	Comment.UserID = userID
@@ -87,8 +94,10 @@ func UpdateComment(context *gin.Context) {
 	db := database.GetDB()
 	userData := context.MustGet("userData").(jwt.MapClaims)
 	contentType := helpers.GetContentType(context)
+
 	Comment := models.Comment{}
 	commentId, _ := strconv.Atoi(context.Param("commentId"))
+
 	userId := uint(userData["id"].(float64))
 	if contentType == appJSON {
 		context.ShouldBindJSON(&Comment)

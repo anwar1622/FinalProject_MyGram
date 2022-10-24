@@ -24,7 +24,7 @@ func Routers() *gin.Engine {
 		photoRouter.PUT("/:photoId", middleware.PhotoAutorization(), controllers.UpdatePhoto)
 		photoRouter.DELETE("/:photoId", middleware.PhotoAutorization(), controllers.DeletePhoto)
 	}
-	commentRouter := router.Group("/comment")
+	commentRouter := router.Group("/comments")
 	{
 		commentRouter.Use(middleware.Authentication())
 		commentRouter.POST("/", controllers.CreateComment)
